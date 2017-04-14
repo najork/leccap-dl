@@ -13,7 +13,7 @@ LECCAP_BASE_URL = "https://leccap.engin.umich.edu/leccap/viewer/s/"
 def parse_args():
     parser = argparse.ArgumentParser(\
         description="An automated leccap recording downloader",\
-        epilog="example: python leccap_dl.py hsfrlzcioe7xc71tu1w eecs482_lecture")
+        epilog='example: python leccap_dl.py 74o53yhn4z4ecz14zzx "EECS 575 001 WN 2017"')
     parser.add_argument("course_uid",\
         help="the unique leccap course identifier")
     parser.add_argument("file_prefix",\
@@ -57,12 +57,22 @@ def main():
 
     browser.quit()
 
-    # download videos
-    for i in range(len(video_urls)):
-        filename = args.file_prefix + str(i + 1) + FILE_EXT
-
-        print("downloading " + filename + " from " + video_urls[i])
-        urllib.urlretrieve(video_urls[i], filename)
+    # download all videos
+    dl_all = raw_input("Found " + str(len(video_urls)) + " videos. Download all?  yes or no: ")
+    if dl_all in {"y", "Y", "yes", "Yes", "YES", "ye"}:
+        for i in range(len(video_urls)):
+            filename = args.file_prefix + str(i + 1) + FILE_EXT
+            print("downloading " + filename + " from " + video_urls[i])
+            urllib.urlretrieve(video_urls[i], filename)
+    else:
+        # choose which to download
+        for i in range(len(video_urls)):
+            filename = args.file_prefix + str(i + 1) + FILE_EXT
+            print("Download lecture " + str(i+1) + " of " + str(len(video_urls)) + "?  '" + filename + "'")
+            answer = raw_input("yes or no: ")
+            if answer in {"y", "Y", "yes", "Yes", "YES", "ye"}:
+                print("downloading " + filename + " from " + video_urls[i])
+                urllib.urlretrieve(video_urls[i], filename)
 
 if __name__ == '__main__':
     main()
