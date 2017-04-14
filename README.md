@@ -22,4 +22,4 @@ Requires Google Chrome and Selenium (`$ pip install selenium`).
 
 #### Example
 
-`python leccap_dl.py hsfrlzcioe7xc71tu1w eecs482_lecture`
+`python leccap_dl.py 74o53yhn4z4ecz14zzx "EECS 575 001 WN 2017"`
